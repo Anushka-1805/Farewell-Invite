@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Farewell Invitation</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+      background-color: #222;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      width: 90%;
+      max-width: 400px;
+    }
+    input, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    .thank-you {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="invitationForm">
+      <h2>You're Invited to the Farewell Party!</h2>
+
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+      <input type="hidden" name="to" value="anushkashinde0274@gmail.com">
+
+      <input type="text" name="name" placeholder="Your Name" required><br>
+      <input type="email" name="email" placeholder="Your Email" required><br>
+      <input type="tel" name="phone" placeholder="Your Phone Number" required><br>
+
+      <label>Will you be able to attend?</label><br>
+      <input type="radio" name="attend" value="Yes" required> Yes
+      <input type="radio" name="attend" value="No"> No<br><br>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="thank-you" id="thankYouMessage">
+      <h2>Thank You!</h2>
+      <p>Your response has been submitted successfully.</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('invitationForm');
+    const thankYouMessage = document.getElementById('thankYouMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => {
+        if (res.ok) {
+          form.style.display = 'none';
+          thankYouMessage.style.display = 'block';
+        } else {
+          alert("Something went wrong. Please try again.");
+        }
+      })
+      .catch(() => {
+        alert("Submission failed. Please check your internet connection.");
+      });
+    });
+  </script>
+
+</body>
+</html>
